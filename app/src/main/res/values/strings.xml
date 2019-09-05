@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Firebase Crud</string>
+    <string name="btn1">ADD</string>
+    <string name="btn2">SHOW</string>
+    <string name="btn3">UPDATE</string>
+    <string name="btn4">DELETE</string>
+</resources>
