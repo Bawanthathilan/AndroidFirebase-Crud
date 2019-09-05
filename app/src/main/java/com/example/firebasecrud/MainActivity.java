@@ -17,53 +17,70 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference dbRef;
     Student std;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        txtID = findViewById(R.id.editText);
-        txtName = findViewById(R.id.editText2);
-        txtAdd = findViewById(R.id.editText3);
-        txtConNo=findViewById(R.id.editText4);
-
-        btnSave = findViewById(R.id.button);
-        btnShow = findViewById(R.id.button2);
-        btnUpdate = findViewById(R.id.button3);
-        btnDelete = findViewById(R.id.button4);
-
-        std = new Student();
-    }
-
     private void clearControls(){
         txtID.setText("");
         txtName.setText("");
         txtAdd.setText("");
         txtConNo.setText("");
     }
-    public class MyListener implements View.OnClickListener {
-        @Override
-        public void onClick (View v) {
-            dbRef = FirebaseDatabase.getInstance().getReference().child("Student");
-            try{
-                if(TextUtils.isEmpty(txtID.getText().toString()))
-                    Toast.makeText(getApplicationContext(),"Please Enter ID" , Toast.LENGTH_SHORT).show();
-                else if (TextUtils.isEmpty(txtName.getText().toString()))
-                    Toast.makeText(getApplicationContext(),"Please enter a name",Toast.LENGTH_SHORT).show();
-                else if (TextUtils.isEmpty(txtAdd.getText().toString()))
-                    Toast.makeText(getApplicationContext(),"Please enter a Address",Toast.LENGTH_SHORT).show();
-                else{
-                    std.setID(txtID.getText().toString().trim());
-                    std.setName(txtName.getText().toString().trim());
-                    std.setAddress(txtAdd.getText().toString().trim());
-                    std.setConNo(Integer.parseInt(txtConNo.getText().toString().trim()));
 
-                    dbRef.push().setValue(std);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        txtID = findViewById(R.id.txtid);
+        txtName = findViewById(R.id.txtname);
+        txtAdd = findViewById(R.id.txtaddress);
+        txtConNo = findViewById(R.id.txtcontact);
+
+        btnSave = findViewById(R.id.buttonAdd);
+        btnShow = findViewById(R.id.buttonshow);
+        btnUpdate = findViewById(R.id.buttonUpdate);
+        btnDelete = findViewById(R.id.buttonDelete);
+
+        std = new Student();
+
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbRef = FirebaseDatabase.getInstance().getReference().child("Student");
+
+                try {
+                    if (TextUtils.isEmpty(txtID.getText().toString()))
+                        Toast.makeText(getApplicationContext(), "Please Enter ID", Toast.LENGTH_SHORT).show();
+                    else if (TextUtils.isEmpty(txtName.getText().toString()))
+                        Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
+                    else if (TextUtils.isEmpty(txtAdd.getText().toString()))
+                        Toast.makeText(getApplicationContext(), "Please enter a Address", Toast.LENGTH_SHORT).show();
+                    else if (TextUtils.isEmpty(txtConNo.getText().toString()))
+                        Toast.makeText(getApplicationContext(), "Please enter a contact Number", Toast.LENGTH_SHORT).show();
+                    else {
+                        std.setID(txtID.getText().toString().trim());
+                        std.setName(txtName.getText().toString().trim());
+                        std.setAddress(txtAdd.getText().toString().trim());
+                        std.setConNo(Integer.parseInt(txtConNo.getText().toString().trim()));
+
+                        dbRef.push().setValue(std);
+
+                        Toast.makeText(getApplicationContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
+                        clearControls();
+                    }
+
+
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "Invalid Contact Number", Toast.LENGTH_SHORT).show();
                 }
 
             }
-        }
-
-
+        });
 
     }}
+
+
+
+
+
+
+
