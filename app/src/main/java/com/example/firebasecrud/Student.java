@@ -16,6 +16,10 @@ public class Student {
         this.conNo = conNo;
     }
 
+    public Student() {
+
+    }
+
     public String getID() {
         return ID;
     }
